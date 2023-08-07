@@ -17,12 +17,10 @@ class Articles:
         in_stock = df.loc[df['id'] == self.article_id, 'in stock'].squeeze() > 0
         return in_stock
 
-    # def remove(self):
-    #     index = df.loc[df['id'] == self.article_id, 'in stock'].squeeze()
-    #     print(index)
-    #     index = index - 1
-    #     print(index)
-    #     index = df.loc[df['id'] == self.article_id, 'in stock']
+    def remove(self):
+        df.loc[df['id'] == self.article_id, 'in stock'] -= 1
+        df.to_csv("articles.csv", index=False)
+
 
 class PrintPDF:
 
@@ -50,7 +48,7 @@ article = Articles(article_index)
 if article.available():
     receipt = PrintPDF(article)
     receipt.pdfprint()
-    # article.remove()
+    article.remove()
 else:
     print("No such article exists")
 
